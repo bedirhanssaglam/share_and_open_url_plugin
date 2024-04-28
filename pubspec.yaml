@@ -3,6 +3,7 @@ description: "A Flutter plugin for sharing text and opening URLs."
 version: 0.0.1
 homepage: https://github.com/bedirhanssaglam/share_and_open_url_plugin
 repository: https://github.com/bedirhanssaglam/share_and_open_url_plugin
+issue_tracker: https://github.com/bedirhanssaglam/share_and_open_url_plugin/issues
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
