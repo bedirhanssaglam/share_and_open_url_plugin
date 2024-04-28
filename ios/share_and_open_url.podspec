@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A Flutter plugin for sharing text and opening URLs.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/bedirhanssaglam/share_and_open_url_plugin'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Bedirhan Saglam' => 'bedirhansaglam270@gmail.com' }
   s.source           = { :path => '.' }
