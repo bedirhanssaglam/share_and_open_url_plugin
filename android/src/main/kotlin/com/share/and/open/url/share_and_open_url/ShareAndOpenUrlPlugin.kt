@@ -47,11 +47,13 @@ class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
   }
 
   private fun shareText(text: String) {
-    val intent = Intent(Intent.ACTION_SEND)
-    intent.type = "text/plain"
-    intent.putExtra(Intent.EXTRA_TEXT, text)
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    val chooser = Intent.createChooser(intent, null)
+    val intent: Intent =
+        Intent(Intent.ACTION_SEND).apply {
+          type = "text/plain"
+          putExtra(Intent.EXTRA_TEXT, text)
+          Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    val chooser: Intent = Intent.createChooser(intent, null)
     chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     val context = flutterPluginBinding.applicationContext
     context.startActivity(chooser)
