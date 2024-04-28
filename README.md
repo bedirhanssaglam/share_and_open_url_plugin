@@ -1,4 +1,4 @@
-# share_and_open_url
+# share_and_open_url_plugin
 
 A Flutter plugin for sharing text and opening URLs.
 
