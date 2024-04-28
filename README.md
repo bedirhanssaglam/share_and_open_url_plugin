@@ -118,6 +118,16 @@ public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin {
 }
 ```
 
+### Installation
+
+```yaml                    
+dependencies:
+  share_and_open_url:
+   git:
+    url: https://github.com/bedirhanssaglam/share_and_open_url_plugin
+    ref: main              
+```           
+
 ### Usage
 
 ```dart
