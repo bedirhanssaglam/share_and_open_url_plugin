@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - share_and_open_url (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - share_and_open_url (from `.symlinks/plugins/share_and_open_url/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  share_and_open_url:
+    :path: ".symlinks/plugins/share_and_open_url/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  share_and_open_url: 727a1889b1c2ee195878b53d116f2173ffe9e5b8
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.15.2
