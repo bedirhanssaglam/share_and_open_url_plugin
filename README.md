@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _openUrl() async {
     try {
-      await _shareAndOpenUrlPlugin.openUrl("https://www.google.com.tr/?hl=tr");
+      await _shareAndOpenUrlPlugin.openUrl("https://flutter.dev/");
     } on PlatformException catch (e) {
       throw PlatformException(code: e.code, message: "Failed to open url: '${e.message}'.");
     }
