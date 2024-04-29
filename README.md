@@ -1,4 +1,4 @@
-# share_and_open_url
+# share_and_open_url_plugin
 
 A Flutter plugin for sharing text and opening URLs.
 
@@ -124,6 +124,16 @@ public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin, ShareAndOpenUrlPlug
 }
 ```
 
+### Installation
+
+```yaml                    
+dependencies:
+  share_and_open_url:
+   git:
+    url: https://github.com/bedirhanssaglam/share_and_open_url_plugin
+    ref: main              
+```           
+
 ### Usage
 
 ```dart
@@ -149,7 +159,7 @@ class _MyAppState extends State<MyApp> {
     try {
       await _shareAndOpenUrlPlugin.openUrl("https://www.google.com.tr/?hl=tr");
     } on PlatformException catch (e) {
-      throw PlatformException(code: e.code, message: "Failed to share text: '${e.message}'.");
+      throw PlatformException(code: e.code, message: "Failed to open url: '${e.message}'.");
     }
   }
 
