@@ -200,6 +200,8 @@ class _MyAppState extends State<MyApp> {
 ### Screenshots
 
 <p float="left">
-  <img src="/documentation/share_text.png" width=250" />
-  <img src="/documentation/open_url.png" width="250" />
+  <img src="/documentation/share_text_ios.png" width=250" />
+  <img src="/documentation/open_url_ios.png" width="250" />
+  <img src="/documentation/share_text_android.jpeg" width=250" />
+  <img src="/documentation/open_url_android.jpeg" width="250" />
 </p>
