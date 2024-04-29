@@ -2,6 +2,12 @@
 
 A Flutter plugin for sharing text and opening URLs.
 
+### Platforms
+
+✅ Android (Kotlin)
+
+✅ iOS (Swift)
+
 ### ShareAndOpenUrlPlugin.kt
 
 ```kotlin
