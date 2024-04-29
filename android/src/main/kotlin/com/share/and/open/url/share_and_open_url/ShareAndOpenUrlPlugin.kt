@@ -1,69 +1,60 @@
 package com.share.and.open.url.share_and_open_url
 
-import android.content.Intent
-import android.net.Uri
 import androidx.annotation.NonNull
+import com.share.and.open.url.share_and_open_url.constants.ShareAndOpenUrlConstants
+import com.share.and.open.url.share_and_open_url.service.ShareAndOpenUrlPluginService
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-/** ShareAndOpenUrlPlugin */
 class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
   private lateinit var channel: MethodChannel
   private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+  private lateinit var shareAndOpenUrlPluginService: ShareAndOpenUrlPluginService
 
   override fun onAttachedToEngine(
       @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
   ) {
     this.flutterPluginBinding = flutterPluginBinding
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "share_and_open_url")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, ShareAndOpenUrlConstants.METHOD_CHANNEL_NAME)
     channel.setMethodCallHandler(this)
+    val context = flutterPluginBinding.applicationContext
+    shareAndOpenUrlPluginService = ShareAndOpenUrlPluginService(context)
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     when (call.method) {
-      "shareText" -> {
+      ShareAndOpenUrlConstants.METHOD_SHARE_TEXT -> {
         val text = call.argument<String>("text")
-        if (text != null) {
-          shareText(text)
-          result.success(null)
-        } else {
-          result.error("INVALID_ARGUMENT", "Text argument is missing or invalid", null)
+        if (text.isNullOrEmpty()) {
+          result.error(
+              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
+              "Text argument is missing or invalid",
+              null
+          )
+          return
         }
+        shareAndOpenUrlPluginService.shareText(text!!)
+        result.success(null)
       }
-      "openUrl" -> {
+      ShareAndOpenUrlConstants.METHOD_OPEN_URL -> {
         val url = call.argument<String>("url")
-        if (url != null) {
-          openUrl(url)
-          result.success(null)
-        } else {
-          result.error("INVALID_ARGUMENT", "URL argument is missing or invalid", null)
+        if (url.isNullOrEmpty()) {
+          result.error(
+              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
+              "URL argument is missing or invalid",
+              null
+          )
+          return
         }
+        shareAndOpenUrlPluginService.openUrl(url!!)
+        result.success(null)
       }
       else -> result.notImplemented()
     }
-  }
-
-  private fun shareText(text: String) {
-    val intent: Intent =
-        Intent(Intent.ACTION_SEND).apply {
-          type = "text/plain"
-          putExtra(Intent.EXTRA_TEXT, text)
-          Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-    val chooser: Intent = Intent.createChooser(intent, null)
-    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    val context = flutterPluginBinding.applicationContext
-    context.startActivity(chooser)
-  }
-
-  private fun openUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    val context = flutterPluginBinding.applicationContext
-    context.startActivity(intent)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

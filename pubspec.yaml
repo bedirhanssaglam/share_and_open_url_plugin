@@ -27,3 +27,6 @@ flutter:
         pluginClass: ShareAndOpenUrlPlugin
       ios:
         pluginClass: ShareAndOpenUrlPlugin
+
+  assets:
+    - documentation/

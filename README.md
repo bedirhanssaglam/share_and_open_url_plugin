@@ -5,61 +5,51 @@ A Flutter plugin for sharing text and opening URLs.
 ### ShareAndOpenUrlPlugin.kt
 
 ```kotlin
-/** ShareAndOpenUrlPlugin */
 class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
   private lateinit var channel: MethodChannel
   private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+  private lateinit var shareAndOpenUrlPluginService: ShareAndOpenUrlPluginService
 
   override fun onAttachedToEngine(
       @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
   ) {
     this.flutterPluginBinding = flutterPluginBinding
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "share_and_open_url")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, ShareAndOpenUrlConstants.METHOD_CHANNEL_NAME)
     channel.setMethodCallHandler(this)
+    val context = flutterPluginBinding.applicationContext
+    shareAndOpenUrlPluginService = ShareAndOpenUrlPluginService(context)
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     when (call.method) {
-      "shareText" -> {
+      ShareAndOpenUrlConstants.METHOD_SHARE_TEXT -> {
         val text = call.argument<String>("text")
-        if (text != null) {
-          shareText(text)
-          result.success(null)
-        } else {
-          result.error("INVALID_ARGUMENT", "Text argument is missing or invalid", null)
+        if (text.isNullOrEmpty()) {
+          result.error(
+              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
+              "Text argument is missing or invalid",
+              null
+          )
+          return
         }
+        shareAndOpenUrlPluginService.shareText(text!!)
+        result.success(null)
       }
-      "openUrl" -> {
+      ShareAndOpenUrlConstants.METHOD_OPEN_URL -> {
         val url = call.argument<String>("url")
-        if (url != null) {
-          openUrl(url)
-          result.success(null)
-        } else {
-          result.error("INVALID_ARGUMENT", "URL argument is missing or invalid", null)
+        if (url.isNullOrEmpty()) {
+          result.error(
+              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
+              "URL argument is missing or invalid",
+              null
+          )
+          return
         }
+        shareAndOpenUrlPluginService.openUrl(url!!)
+        result.success(null)
       }
       else -> result.notImplemented()
     }
-  }
-
-  private fun shareText(text: String) {
-    val intent: Intent =
-        Intent(Intent.ACTION_SEND).apply {
-          type = "text/plain"
-          putExtra(Intent.EXTRA_TEXT, text)
-          Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-    val chooser: Intent = Intent.createChooser(intent, null)
-    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    val context = flutterPluginBinding.applicationContext
-    context.startActivity(chooser)
-  }
-
-  private fun openUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    val context = flutterPluginBinding.applicationContext
-    context.startActivity(intent)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -71,8 +61,37 @@ class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
 ### ShareAndOpenUrlPlugin.swift
 
 ```swift
-/// MARK: - ShareAndOpenUrlPlugin
-public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin {
+// MARK: - ShareAndOpenUrlPluginProtocol
+protocol ShareAndOpenUrlPluginProtocol {
+    func shareText(_ text: String)
+    func openURL(_ url: URL)
+}
+
+extension ShareAndOpenUrlPluginProtocol {
+    func shareText(_ text: String) {
+        guard !text.isEmpty else {
+            print("Error: Text is empty.")
+            return
+        }
+        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+            viewController.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+
+    func openURL(_ url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+}
+
+// MARK: - ShareAndOpenUrlPlugin
+public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin, ShareAndOpenUrlPluginProtocol {
+    // Method names
+    private enum Method {
+        static let shareText = "shareText"
+        static let openUrl = "openUrl"
+    }
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "share_and_open_url", binaryMessenger: registrar.messenger())
         let instance = ShareAndOpenUrlPlugin()
@@ -81,39 +100,26 @@ public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "shareText":
-            if let arguments = call.arguments as? [String: Any],
-               let text = arguments["text"] as? String {
-                shareText(text)
-                result(nil)
-            } else {
+        case Method.shareText:
+            guard let arguments = call.arguments as? [String: Any],
+                  let text = arguments["text"] as? String else {
                 result(FlutterError(code: "invalid_arguments", message: "Text argument is missing or invalid", details: nil))
+                return
             }
-        case "openUrl":
-            if let arguments = call.arguments as? [String: Any],
-               let urlString = arguments["url"] as? String,
-               let url = URL(string: urlString) {
-                openUrl(url)
-                result(nil)
-            } else {
+            shareText(text)
+            result(nil)
+        case Method.openUrl:
+            guard let arguments = call.arguments as? [String: Any],
+                  let urlString = arguments["url"] as? String,
+                  let url = URL(string: urlString) else {
                 result(FlutterError(code: "invalid_arguments", message: "URL argument is missing or invalid", details: nil))
+                return
             }
+            openURL(url)
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }
-    }
-    
-    /// MARK: - Private Methods
-
-    private func shareText(_ text: String) {
-        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-            viewController.present(activityViewController, animated: true, completion: nil)
-        }
-    }
-    
-    private func openUrl(_ url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
 ```
@@ -174,3 +180,10 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
+
+### Screenshots
+
+<p float="left">
+  <img src="/documentation/share_text.png" width=250" />
+  <img src="/documentation/open_url.png" width="250" />
+</p>
