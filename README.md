@@ -26,10 +26,7 @@
 
 ```yaml                    
 dependencies:
-  share_and_open_url:
-   git:
-    url: https://github.com/bedirhanssaglam/share_and_open_url_plugin
-    ref: main              
+  share_and_open_url: ^0.0.4              
 ```           
 
 ### Usage
