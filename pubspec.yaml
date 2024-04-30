@@ -1,12 +1,16 @@
 name: share_and_open_url
-description: "A Flutter plugin for sharing text and opening URLs."
-version: 0.0.1
+description: "share_and_open_url_plugin provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links."
+version: 0.0.3
 homepage: https://github.com/bedirhanssaglam/share_and_open_url_plugin
 repository: https://github.com/bedirhanssaglam/share_and_open_url_plugin
 issue_tracker: https://github.com/bedirhanssaglam/share_and_open_url_plugin/issues
+topics: [share, url]
+platforms:
+  android:
+  ios:
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: '>=2.12.0 <4.0.0'
   flutter: '>=3.3.0'
 
 dependencies:

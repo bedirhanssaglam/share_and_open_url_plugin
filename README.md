@@ -1,6 +1,20 @@
 # share_and_open_url_plugin
 
-A Flutter plugin for sharing text and opening URLs.
+`share_and_open_url_plugin` provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links.
+
+## Table of contents
+
+- [Platforms](#platforms)
+
+- [Installation](#installation)
+
+- [Import](#import)
+
+- [Usage](#usage)
+
+- [Screenshots](#screenshots)
+
+- [License](#license)
 
 ### Platforms
 
@@ -8,137 +22,18 @@ A Flutter plugin for sharing text and opening URLs.
 
 ✅ iOS (Swift)
 
-### ShareAndOpenUrlPlugin.kt
-
-```kotlin
-class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
-  private lateinit var channel: MethodChannel
-  private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
-  private lateinit var shareAndOpenUrlPluginService: ShareAndOpenUrlPluginService
-
-  override fun onAttachedToEngine(
-      @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
-  ) {
-    this.flutterPluginBinding = flutterPluginBinding
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, ShareAndOpenUrlConstants.METHOD_CHANNEL_NAME)
-    channel.setMethodCallHandler(this)
-    val context = flutterPluginBinding.applicationContext
-    shareAndOpenUrlPluginService = ShareAndOpenUrlPluginService(context)
-  }
-
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    when (call.method) {
-      ShareAndOpenUrlConstants.METHOD_SHARE_TEXT -> {
-        val text = call.argument<String>("text")
-        if (text.isNullOrEmpty()) {
-          result.error(
-              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
-              "Text argument is missing or invalid",
-              null
-          )
-          return
-        }
-        shareAndOpenUrlPluginService.shareText(text!!)
-        result.success(null)
-      }
-      ShareAndOpenUrlConstants.METHOD_OPEN_URL -> {
-        val url = call.argument<String>("url")
-        if (url.isNullOrEmpty()) {
-          result.error(
-              ShareAndOpenUrlConstants.ERROR_INVALID_ARGUMENT,
-              "URL argument is missing or invalid",
-              null
-          )
-          return
-        }
-        shareAndOpenUrlPluginService.openUrl(url!!)
-        result.success(null)
-      }
-      else -> result.notImplemented()
-    }
-  }
-
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
-  }
-}
-```
-
-### ShareAndOpenUrlPlugin.swift
-
-```swift
-// MARK: - ShareAndOpenUrlPluginProtocol
-protocol ShareAndOpenUrlPluginProtocol {
-    func shareText(_ text: String)
-    func openURL(_ url: URL)
-}
-
-extension ShareAndOpenUrlPluginProtocol {
-    func shareText(_ text: String) {
-        guard !text.isEmpty else {
-            print("Error: Text is empty.")
-            return
-        }
-        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-            viewController.present(activityViewController, animated: true, completion: nil)
-        }
-    }
-
-    func openURL(_ url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-}
-
-// MARK: - ShareAndOpenUrlPlugin
-public class ShareAndOpenUrlPlugin: NSObject, FlutterPlugin, ShareAndOpenUrlPluginProtocol {
-    // Method names
-    private enum Method {
-        static let shareText = "shareText"
-        static let openUrl = "openUrl"
-    }
-
-    public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "share_and_open_url", binaryMessenger: registrar.messenger())
-        let instance = ShareAndOpenUrlPlugin()
-        registrar.addMethodCallDelegate(instance, channel: channel)
-    }
-    
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case Method.shareText:
-            guard let arguments = call.arguments as? [String: Any],
-                  let text = arguments["text"] as? String else {
-                result(FlutterError(code: "invalid_arguments", message: "Text argument is missing or invalid", details: nil))
-                return
-            }
-            shareText(text)
-            result(nil)
-        case Method.openUrl:
-            guard let arguments = call.arguments as? [String: Any],
-                  let urlString = arguments["url"] as? String,
-                  let url = URL(string: urlString) else {
-                result(FlutterError(code: "invalid_arguments", message: "URL argument is missing or invalid", details: nil))
-                return
-            }
-            openURL(url)
-            result(nil)
-        default:
-            result(FlutterMethodNotImplemented)
-        }
-    }
-}
-```
-
 ### Installation
 
 ```yaml                    
 dependencies:
-  share_and_open_url:
-   git:
-    url: https://github.com/bedirhanssaglam/share_and_open_url_plugin
-    ref: main              
-```           
+  share_and_open_url: <latest_version>           
+```          
+
+### Import
+
+```dart                    
+import 'package:share_and_open_url/share_and_open_url.dart';          
+```    
 
 ### Usage
 
@@ -200,8 +95,13 @@ class _MyAppState extends State<MyApp> {
 ### Screenshots
 
 <p float="left">
-  <img src="/documentation/share_text_ios.png" width=250" />
-  <img src="/documentation/open_url_ios.png" width="250" />
-  <img src="/documentation/share_text_android.jpeg" width=250" />
-  <img src="/documentation/open_url_android.jpeg" width="250" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/e7aff276-e9ba-4253-a2bc-bd079ca7d59e" width=200" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/6147174e-eab1-4784-982a-fe2269bdbd63" width="200" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/128a01fb-ab41-4654-9bbf-31ebe1ce746b" width=200" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/ac7af669-4410-42c7-b454-d6f2a3dd8cfb" width="200" />
 </p>
+
+
+## License
+
+MIT
