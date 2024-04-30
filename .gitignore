@@ -27,3 +27,6 @@ migrate_working_dir/
 **/doc/api/
 .dart_tool/
 build/
+/android/.idea/.gitignore
+/android/.idea/gradle.xml
+/android/.idea/misc.xml

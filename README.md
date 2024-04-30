@@ -1,6 +1,6 @@
-# share_and_open_url_plugin
+# share_and_open_url
 
-`share_and_open_url_plugin` provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links.
+`share_and_open_url` provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links.
 
 ## Table of contents
 
@@ -92,10 +92,10 @@ class _MyAppState extends State<MyApp> {
 ### Screenshots
 
 <p float="left">
-  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/e7aff276-e9ba-4253-a2bc-bd079ca7d59e" width=200" />
-  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/6147174e-eab1-4784-982a-fe2269bdbd63" width="200" />
-  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/128a01fb-ab41-4654-9bbf-31ebe1ce746b" width=200" />
-  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/ac7af669-4410-42c7-b454-d6f2a3dd8cfb" width="200" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/e7aff276-e9ba-4253-a2bc-bd079ca7d59e" width=150" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/6147174e-eab1-4784-982a-fe2269bdbd63" width="150" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/128a01fb-ab41-4654-9bbf-31ebe1ce746b" width=150" />
+  <img src="https://github.com/bedirhanssaglam/share_and_open_url_plugin/assets/105479937/ac7af669-4410-42c7-b454-d6f2a3dd8cfb" width="150" />
 </p>
 
 
