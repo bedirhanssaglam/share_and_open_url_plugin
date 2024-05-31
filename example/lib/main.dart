@@ -8,8 +8,8 @@ void main() {
   runApp(const MyApp());
 }
 
-final class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
