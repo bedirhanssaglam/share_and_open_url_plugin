@@ -22,7 +22,8 @@ class _MyAppState extends State<MyApp> {
     try {
       await _shareAndOpenUrlPlugin.shareText("Hello from Flutter!");
     } on PlatformException catch (e) {
-      throw PlatformException(code: e.code, message: "Failed to share text: '${e.message}'.");
+      throw PlatformException(
+          code: e.code, message: "Failed to share text: '${e.message}'.");
     }
   }
 
@@ -30,7 +31,10 @@ class _MyAppState extends State<MyApp> {
     try {
       await _shareAndOpenUrlPlugin.openUrl("https://flutter.dev/");
     } on PlatformException catch (e) {
-      throw PlatformException(code: e.code, message: "Failed to open url: '${e.message}'.");
+      throw PlatformException(
+        code: e.code,
+        message: "Failed to open url: '${e.message}'.",
+      );
     }
   }
 

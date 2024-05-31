@@ -11,7 +11,8 @@ class ShareAndOpenUrl {
   /// [shareText] method.
   ///
   /// * [text]: The text to be shared.
-  Future<void> shareText(String text) => ShareAndOpenUrlPlatform.instance.shareText(text);
+  Future<void> shareText(String text) =>
+      ShareAndOpenUrlPlatform.instance.shareText(text);
 
   /// The [openUrl] method is used to open the given URL in the browser.
   ///
@@ -19,5 +20,6 @@ class ShareAndOpenUrl {
   /// [openUrl] method.
   ///
   /// * [url]: The URL to be opened.
-  Future<void> openUrl(String url) => ShareAndOpenUrlPlatform.instance.openUrl(url);
+  Future<void> openUrl(String url) =>
+      ShareAndOpenUrlPlatform.instance.openUrl(url);
 }
