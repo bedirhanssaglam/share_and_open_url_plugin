@@ -1,10 +1,10 @@
 name: share_and_open_url
 description: "share_and_open_url_plugin provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links."
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/bedirhanssaglam/share_and_open_url_plugin
 repository: https://github.com/bedirhanssaglam/share_and_open_url_plugin
 issue_tracker: https://github.com/bedirhanssaglam/share_and_open_url_plugin/issues
-topics: [share, url]
+topics: [share, url, plugin]
 platforms:
   android:
   ios:
