@@ -11,13 +11,11 @@ class MethodChannelShareAndOpenUrl extends ShareAndOpenUrlPlatform {
 
   /// Invoke the platform method to share text.
   @override
-  Future<void> shareText(String text) {
-    return methodChannel.invokeMethod('shareText', {'text': text});
-  }
+  Future<void> shareText(String text) =>
+      methodChannel.invokeMethod('shareText', {'text': text});
 
   /// Invoke the platform method to open a URL.
   @override
-  Future<void> openUrl(String url) {
-    return methodChannel.invokeMethod('openUrl', {'url': url});
-  }
+  Future<void> openUrl(String url) =>
+      methodChannel.invokeMethod('openUrl', {'url': url});
 }
