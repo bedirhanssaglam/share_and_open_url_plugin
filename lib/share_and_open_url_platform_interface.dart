@@ -1,6 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-import 'share_and_open_url_method_channel.dart';
+import 'package:share_and_open_url/share_and_open_url_method_channel.dart';
 
 abstract class ShareAndOpenUrlPlatform extends PlatformInterface {
   /// Constructs a ShareAndOpenUrlPlatform.
@@ -23,13 +22,7 @@ abstract class ShareAndOpenUrlPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> shareText(String text) {
-    // This method should be implemented in platform-specific subclasses.
-    throw UnimplementedError('shareText() has not been implemented.');
-  }
+  Future<void> shareText(String text);
 
-  Future<void> openUrl(String url) {
-    // This method should be implemented in platform-specific subclasses.
-    throw UnimplementedError('openUrl() has not been implemented.');
-  }
+  Future<void> openUrl(String url);
 }
