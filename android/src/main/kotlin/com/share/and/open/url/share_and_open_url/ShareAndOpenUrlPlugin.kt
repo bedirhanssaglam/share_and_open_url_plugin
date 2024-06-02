@@ -1,6 +1,6 @@
 package com.share.and.open.url.share_and_open_url
 
-import androidx.annotation.NonNull
+import android.content.Context
 import com.share.and.open.url.share_and_open_url.constants.ShareAndOpenUrlConstants
 import com.share.and.open.url.share_and_open_url.service.ShareAndOpenUrlPluginService
 
@@ -13,19 +13,21 @@ import io.flutter.plugin.common.MethodChannel.Result
 class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
   private lateinit var channel: MethodChannel
   private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
-  private lateinit var shareAndOpenUrlPluginService: ShareAndOpenUrlPluginService
+
+  // Not private for [ShareAndOpenUrlPluginTest]
+  lateinit var shareAndOpenUrlPluginService: ShareAndOpenUrlPluginService
 
   override fun onAttachedToEngine(
-      @NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+      flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
   ) {
     this.flutterPluginBinding = flutterPluginBinding
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, ShareAndOpenUrlConstants.METHOD_CHANNEL_NAME)
     channel.setMethodCallHandler(this)
-    val context = flutterPluginBinding.applicationContext
+    val context: Context = flutterPluginBinding.applicationContext
     shareAndOpenUrlPluginService = ShareAndOpenUrlPluginService(context)
   }
 
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+  override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
       ShareAndOpenUrlConstants.METHOD_SHARE_TEXT -> {
         val text = call.argument<String>("text")
@@ -37,7 +39,7 @@ class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
           )
           return
         }
-        shareAndOpenUrlPluginService.shareText(text!!)
+        shareAndOpenUrlPluginService.shareText(text)
         result.success(null)
       }
       ShareAndOpenUrlConstants.METHOD_OPEN_URL -> {
@@ -50,14 +52,14 @@ class ShareAndOpenUrlPlugin : FlutterPlugin, MethodCallHandler {
           )
           return
         }
-        shareAndOpenUrlPluginService.openUrl(url!!)
+        shareAndOpenUrlPluginService.openUrl(url)
         result.success(null)
       }
       else -> result.notImplemented()
     }
   }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
   }
 }
