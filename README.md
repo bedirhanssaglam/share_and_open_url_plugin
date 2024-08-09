@@ -1,4 +1,6 @@
-# share_and_open_url
+<p float="center">
+  <img src="https://github.com/user-attachments/assets/8b40081a-0860-4587-9a98-8294a9a38548" />
+</p>
 
 `share_and_open_url` provides functionality for sharing text and opening URLs. It allows users to easily share content and quickly access web links.
 
