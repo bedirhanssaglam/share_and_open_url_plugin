@@ -28,7 +28,7 @@
 
 ```yaml                    
 dependencies:
-  share_and_open_url: ^0.0.6    
+  share_and_open_url: ^0.0.7
 ```           
 
 ### Usage

@@ -1,3 +1,7 @@
+# 0.0.7
+
+- doc: add plugin image
+
 # 0.0.6
 
 - Dart and Kotlin mock tests and code improvements
